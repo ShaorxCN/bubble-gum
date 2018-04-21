@@ -7,9 +7,13 @@ import (
 //发送的报文实体
 type MybankReq struct {
 	XMLName xml.Name `xml:"document"`
-	PayReq  MybankPayReq   `xml:"request"`
+	Req  interface{}   `xml:"request"`
 	Sign    *MybankSignature
 }
+
+
+
+
 
 //网商报文头
 type MybankReqHead struct {
@@ -76,7 +80,7 @@ type MybankSignature struct {
 //应答的报文实体
 type MybankResp struct {
 	XMLName xml.Name `xml:"document"`
-	PayResp MybankPayResp  `xml:"response"`
+	Resp   interface{}  `xml:"response"`
 	Sign    *MybankSignature
 }
 
@@ -138,3 +142,185 @@ type MybankPayRespBody struct {
 	BuyerPayAmount    string `xml:"BuyerPayAmount,omitempty"`    // 用户实付金额，建议打印在小票上避免退款时出现纠纷。仅支付宝返回
 	InvoiceAmount     string `xml:"InvoiceAmount,omitempty"`     // 开票金额，快速告知商户应该给用户开多少钱发票。仅支付宝返回
 }
+
+
+// QueryReq 查询订单
+type MyBankQueryReq struct {
+	XMLName xml.Name    `xml:"request"`
+	Id 		string		`xml:"id,attr"`
+	Head    MybankRespHead
+	Body    MyBankQueryReqBody
+}
+
+type MyBankQueryReqBody struct {
+	XMLName    xml.Name `xml:"body"`
+	IsvOrgID   string   `xml:"IsvOrgId,omitempty"`
+	MerchantID string   `xml:"MerchantId,omitempty"`
+	OutTradeNo string   `xml:"OutTradeNo,omitempty"`
+}
+
+// QueryResp 查询订单
+type MyBankQueryResp struct {
+	XMLName xml.Name `xml:"response"`
+	Id 		string		`xml:"id,attr"`
+	Head    MybankRespHead
+	Body    MyBankQueryRespBody
+}
+
+type MyBankQueryRespBody struct {
+	XMLName           xml.Name `xml:"body"`
+	CommonResp        MybankRespInfo `xml:"RespInfo,omitempty"`
+	OutTradeNo        string   `xml:"OutTradeNo,omitempty"`
+	OrderNo           string   `xml:"OrderNo,omitempty"`
+	OrderType         string   `xml:"OrderType,omitempty"`
+	TradeStatus       string   `xml:"TradeStatus,omitempty"`
+	ChannelType       string   `xml:"ChannelType,omitempty"`
+	TotalAmount       string   `xml:"TotalAmount,omitempty"`
+	Currency          string   `xml:"Currency,omitempty"`
+	MerchantID        string   `xml:"MerchantId,omitempty"`
+	IsvOrgID          string   `xml:"IsvOrgId,omitempty"`
+	Body              string   `xml:"Body,omitempty"`
+	GoodsTag          string   `xml:"GoodsTag,omitempty"`
+	GoodsDetail       string   `xml:"GoodsDetail,omitempty"`
+	OpenID            string   `xml:"OpenId,omitempty"`
+	OperatorID        string   `xml:"OperatorId,omitempty"`
+	StoreID           string   `xml:"StoreId,omitempty"`
+	DeviceID          string   `xml:"DeviceId,omitempty"`
+	SettleType        string   `xml:"SettleType,omitempty"`
+	Attach            string   `xml:"Attach,omitempty"`
+	GmtPayment        string   `xml:"GmtPayment,omitempty"`
+	BankType          string   `xml:"BankType,omitempty"`
+	IsSubscribe       string   `xml:"IsSubscribe,omitempty"`
+	PayChannelOrderNo string   `xml:"PayChannelOrderNo,omitempty"`
+	MerchantOrderNo   string   `xml:"MerchantOrderNo,omitempty"`
+	SubAppID          string   `xml:"SubAppId,omitempty"`
+	CouponFee         string   `xml:"CouponFee,omitempty"`
+	SubOpenID         string   `xml:"SubOpenId,omitempty"`
+	BuyerLogonID      string   `xml:"BuyerLogonId,omitempty"`
+	BuyerUserID       string   `xml:"BuyerUserId,omitempty"`
+	Credit            string   `xml:"Credit,omitempty"`
+	ReceiptAmount     string   `xml:"ReceiptAmount,omitempty"`
+	BuyerPayAmount    string   `xml:"BuyerPayAmount,omitempty"`
+	InvoiceAmount     string   `xml:"InvoiceAmount,omitempty"`
+}
+
+
+
+// MybankNotifyReqBody 报文体
+type MybankNotifyReqBody struct {
+	XMLName           xml.Name `xml:"body" json:"-"`
+	OutTradeNo        string   `xml:"OutTradeNo" json:"-"  `
+	ChannelType       string   `xml:"ChannelType,omitempty" json:"-"`
+	TotalAmount       string   `xml:"TotalAmount,omitempty" json:"-" `
+	Currency          string   `xml:"Currency,omitempty" json:"-" `
+	MerchantId        string   `xml:"MerchantId,omitempty" json:"-" `
+	IsvOrgId          string   `xml:"IsvOrgId,omitempty" json:"-" `
+	Attach            string   `xml:"Attach,omitempty" json:"-" `
+	GmtPayment        string   `xml:"GmtPayment,omitempty" json:"-" `
+	BankType          string   `xml:"BankType,omitempty" json:"-" `
+	IsSubscribe       string   `xml:"IsSubscribe,omitempty" json:"-" `
+	PayChannelOrderNo string   `xml:"PayChannelOrderNo,omitempty" json:"-" `
+	MerchantOrderNo   string   `xml:"MerchantOrderNo,omitempty" json:"-" `
+	SubAppId          string   `xml:"SubAppId,omitempty" json:"-" `
+	CouponFee         string   `xml:"CouponFee,omitempty" json:"-" `
+	OpenId            string   `xml:"OpenId,omitempty" json:"-" `
+	SubOpenId         string   `xml:"SubOpenId,omitempty" json:"-" `
+	BuyerLogonId      string   `xml:"BuyerLogonId,omitempty" json:"-" `
+	BuyerUserId       string   `xml:"BuyerUserId,omitempty" json:"-" `
+	Credit            string   `xml:"Credit,omitempty" json:"-" `
+	ReceiptAmount     string   `xml:"ReceiptAmount,omitempty" json:"-" `
+	BuyerPayAmount    string   `xml:"BuyerPayAmount,omitempty" json:"-" `
+	InvoiceAmount     string   `xml:"InvoiceAmount,omitempty" json:"-" `
+}
+
+// MybankNotifyRespBody 报文体
+type MybankNotifyRespBody struct {
+	XMLName    xml.Name `xml:"body" json:"-" bson:"-"`
+	RespInfo   MybankRespInfo `xml:"RespInfo"`
+	OutTradeNo string   `xml:"OutTradeNo,omitempty" json:"-" bson:"-"`
+}
+
+// MybankNotifyReq 网商银行异步通知(请求)
+type MybankNotifyReq struct {
+	XMLName xml.Name            `xml:"request"`
+	Head    MybankReqHead                `xml:"head"`
+	ID      string              `xml:"id,attr"`
+	Body    MybankNotifyReqBody `xml:"body"`
+}
+
+// MybankNotifyResp 网商银行异步通知(应答)
+type MybankNotifyResp struct {
+	XMLName xml.Name             `xml:"response"`
+	ID      string               `xml:"id,attr"`
+	Head    MybankRespHead             `xml:"head"`
+	Body    MybankNotifyRespBody `xml:"body"`
+}
+
+// MybankNotifyReqDocument 网商银行异步通知(请求)
+type MybankNotifyReqDocument struct {
+	XMLName xml.Name `xml:"document"`
+	Base    MybankNotifyReq
+	Sign    *MybankSignature
+}
+
+// MybankNotifyRespDocument 网商银行异步通知(应答)
+type MybankNotifyRespDocument struct {
+	XMLName xml.Name `xml:"document"`
+	Base    MybankNotifyResp
+	Sign    *MybankSignature
+}
+
+
+
+//PrePayBody 网商预下单body
+type MyBankPrePayBody struct{
+	XMLName  				xml.Name  		`xml:"body"`
+	OutTradeNo 				string    		`xml:"OutTradeNo" validate:"nonzero"`								//外部交易号
+	GoodsID				    string 			`xml:"Goodsid" validate:"nonzero"`									//商品ID
+	Body					string 			`xml:"Body" validate:"nonzero"`										//商品描述，店名-销售商品类目
+	GoodsDetail				string 			`xml:"GoodsDetail,emitempty"`										//商品详情列表 json格式
+	TotalAmount				string 			`xml:"TotalAmount"  validate:"nonzero"`								//单位分
+	Currency				string 			`xml:"Currency" validate:"nonzero"`									//币种
+	MerchantID				string 			`xml:"MerchantId" validate:"nonzero"`								//商户id
+	IsvOrgID				string 			`xml:"IsvOrgId" validate:"nonzero"`									//合作方机构号
+	ChannelType				string 			`xml:"ChannelType" validate:"nonzero"`								//支付渠道类型  WX:微信支付  ALI:支付宝
+	OperatorID				string 			`xml:"OperatorId,emitempty"`										//操作员id
+	StoreID 				string 			`xml:"StoreId,emitempty"`											//门店id
+	DeviceID				string 			`xml:"DeviceId,emitempty" `											//终端设备号
+	DeviceCreateIP			string 			`xml:"DeviceCreateIp" validate:"nonzero"`							//终端ip
+	ExpireExpress			string 			`xml:"ExpireExpress,emitempty"`										//超时时间,分钟
+	SettleType				string 			`xml:"SettleType,emitempty"`										//清算方式
+	Attach					string 			`xml:"Attach,emitempty"`											//附加信息
+	PayLimit				string 			`xml:"PayLimit,emitempty"`											//可选值  credit：信用卡pcredit：花呗（仅支付宝）
+	DiscountableAmount		string 			`xml:"DiscountableAmount,emitempty"`								//打折金额，分
+	UndiscountableAmount	string 			`xml:"UndiscountableAmount,emitempty"`								//不可打折金额
+	AlipayStoreID			string 			`xml:"AlipayStoreId,emitempty"`										//支付宝店铺编号
+	SysServiceProviderID	string 			`xml:"SysServiceProviderId,emitempty"`								//系统商返佣。签约pid	
+	CheckLaterNm			string 			`xml:"CheckLaterNm,emitempty"`										//花呗交易分期数
+}
+
+//PrePayReq 网商预下单交易
+type MybankPrePayReq struct {
+	XMLName     	xml.Name 			`xml:"request" json:"-" url:"-"`
+	ID 				string				`xml:"id,attr"`
+	Head 			MybankReqHead															 	 		 //报文头
+	Body 			MyBankPrePayBody																 //报文内容
+}
+
+//PrePayRespBody  网商预下单应答
+type MyBankPrePayRespBody struct{
+	XMLName 			xml.Name				`xml:"body,omitempty"`
+	RespInfo 			MybankRespInfo				`xml:"RespInfo,omitempty"`
+	OutTradeNo 			string 					`xml:"OutTradeNo,omitempty"` 								// 外部交易号
+	OrderNo  			string 					`xml:"OrderNo,omitempty" `             						// 网商支付订单号
+	QrCodeURL			string 					`xml:"QrCodeUrl,omitempty"`									//二维码链接	
+}
+
+// PrePayResp 被扫支付提交Post数据给到API之后，API会返回XML格式的数据，这个类用来装这些数据
+type PrePayResp struct {
+	XMLName				xml.Name 				`xml:"response"`
+	ID 					string					`xml:"id,attr"`
+	Head     			MybankRespHead
+	Body 				MyBankPrePayRespBody			
+}
+
