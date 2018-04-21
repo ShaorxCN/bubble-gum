@@ -1,8 +1,9 @@
 package channelMock
 
 import (
-	"github.com/CardInfoLink/bubble-gum/channelMock/model"
 	"encoding/json"
+
+	"github.com/CardInfoLink/bubble-gum/channelMock/model"
 	"github.com/CardInfoLink/log"
 )
 
@@ -19,21 +20,22 @@ type alpQueryResp struct {
 }
 
 var alpCommonResp_Success = model.AlpCommonResponse{
-	Code:"10000",
-	Msg:"Success",
-	TradeStatus:"TRADE_SUCCESS",
+	Code:        "10000",
+	Msg:         "Success",
+	TradeStatus: "TRADE_SUCCESS",
 }
 var alpPayResp_Success = alpPayResp{
-	Resp:alpCommonResp_Success,
+	Resp: alpCommonResp_Success,
 }
 
 var alpPreCreateResp_Process = alpPreCreateResp{
-	Resp:alpCommonResp_Success,
+	Resp: alpCommonResp_Success,
 }
 
 var alpQueryResp_Process = alpQueryResp{
-	Resp:alpCommonResp_Success,
+	Resp: alpCommonResp_Success,
 }
+
 // json: 	alipay_trade_pay_response
 func alpServive(req *model.AlpComonRequest) []byte {
 	log.Debugf("[rcv req]%+v", req)
