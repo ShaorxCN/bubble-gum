@@ -11,7 +11,7 @@ import (
 func mbpServive(req *model.MybankReq) []byte {
 	log.Debugf("[rcv req]%+v", req)
 
-	switch req.PayReq.Head.Function {
+	switch req.Head.Function {
 	case "ant.mybank.bkmerchanttrade.pay":
 		return mbpPayService(req)
 	case "ant.mybank.bkmerchanttrade.payQuery":
