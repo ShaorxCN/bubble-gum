@@ -1,10 +1,8 @@
 package channelMock
 
 import (
-	"bytes"
 	"encoding/xml"
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/CardInfoLink/bubble-gum/channelMock/model"
@@ -52,7 +50,7 @@ func mbpPayService(req *model.MybankReq) []byte {
 				Currency:       req.Req.Body.Currency,
 				OrderNo:        req.Req.Body.OutTradeNo,
 				ReceiptAmount:  fmt.Sprintf("%0.f", float64(req.Req.Body.TotalAmount)*float64(0.9)),
-				BuyerPayAmount: fmt.Sprintf("%0.f", float64(req.Req.Body.TotalAmount)*float64(0.8)),
+				BuyerPayAmount: fmt.Sprintf("%0.f", float64(req.Req.Body.TotalAmount)*float64(0.7)),
 				CouponFee:      "100",
 			},
 		},
@@ -88,7 +86,7 @@ func mbpPayQueryService(req *model.MybankReq) []byte {
 				Currency:        req.Req.Body.Currency,
 				OrderNo:         req.Req.Body.OutTradeNo,
 				ReceiptAmount:   "90",
-				BuyerPayAmount:  "80",
+				BuyerPayAmount:  "70",
 				CouponFee:       "100",
 				BuyerLogonID:    "123456",
 				BuyerUserID:     "23456",
@@ -130,33 +128,7 @@ func mbpPayPrePayService(req *model.MybankReq) []byte {
 		},
 		Sign: &model.MybankSignature{},
 	}
-	bes, _ := xml.Marshal(mbpResp)
-
-	nty := &model.MybankNotifyReqDocument{
-		Base: model.MybankNotifyReq{
-			ID: "rquest",
-			Head: model.MybankReqHead{
-				Version:      req.Req.Head.Version,
-				Appid:        "2017120400000109",
-				Function:     "ant.mybank.bkmerchanttrade.prePayNotice",
-				ReqMsgId:     "2018042117475060026861",
-				InputCharset: "UTF-8",
-				SignType:     "RSA",
-				ReqTime:      time.Now().Format("20060102150405"),
-				ReqTimeZone:  "UTC+8",
-			},
-			Body: model.MybankNotifyReqBody{},
-		},
-
-		Sign: &model.MybankSignature{},
-	}
-
-	bs, err := xml.Marshal(nty)
-	if err != nil {
-		log.Errorf("[mybank] notify error:%v", err)
-	}
-
-	http.Post("http://test.quick.ipay.so/scanpay/upNotify/mybank", "application/xml", bytes.NewReader(bs))
-	http.Post("http://sandbox.showmoney.cn/scanpay/upNotify/mybank", "application/xml", bytes.NewReader(bs))
+	bes, err := xml.Marshal(mbpResp)
+	log.Error(err)
 	return bes
 }

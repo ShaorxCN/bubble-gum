@@ -238,41 +238,6 @@ func FypPrePayHandle(w http.ResponseWriter, r *http.Request) {
 
 	msg = url.QueryEscape(msg)
 
-	noty := &model.FuiouNotifyReq{
-		ResultCode:     "000000",
-		ResultMsg:      "SUCCESS",
-		InsCD:          req.InsCD,
-		MchntCD:        req.MchntCD,
-		OrderAmt:       req.OrderAmt,
-		TransactionId:  fmt.Sprintf("%d", time.Now().Unix()),
-		RandomStr:      "123456",
-		Sign:           "nocheck",
-		SettleOrderAmt: req.OrderAmt,
-		MchntOrderNo:   req.MchntOrderNo,
-		TxnFinTs:       time.Now().Format("20060102150405"),
-	}
-
-	bs, err := xml.Marshal(noty)
-	if err != nil {
-		log.Errorf("send notify error:%v", err)
-		return
-	}
-
-	nty, ok := util.GBKTranscoder.Encode(string(bs))
-	if !ok {
-		w.Write([]byte("fuiou encode mock error"))
-		return
-	}
-
-	nty = url.QueryEscape(nty)
-
-	res, err := http.Post(req.NotifyURL, "x-www-form-urlencoded", bytes.NewReader([]byte(nty)))
-	log.Error(res, err)
-
-	n, _ := ioutil.ReadAll(res.Body)
-	res.Body.Close()
-	log.Error(string(n))
-
 	w.Write([]byte(msg))
 	return
 }
