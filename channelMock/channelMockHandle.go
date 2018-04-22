@@ -238,8 +238,6 @@ func FypPrePayHandle(w http.ResponseWriter, r *http.Request) {
 
 	msg = url.QueryEscape(msg)
 
-	w.Write([]byte(msg))
-
 	noty := &model.FuiouNotifyReq{
 		ResultCode:     "000000",
 		ResultMsg:      "SUCCESS",
@@ -268,7 +266,14 @@ func FypPrePayHandle(w http.ResponseWriter, r *http.Request) {
 
 	nty = url.QueryEscape(nty)
 
-	http.Post(req.NotifyURL, "application/xml", bytes.NewReader([]byte(nty)))
+	res, err := http.Post(req.NotifyURL, "x-www-form-urlencoded", bytes.NewReader([]byte(nty)))
+	log.Error(res, err)
+
+	n, _ := ioutil.ReadAll(res.Body)
+	res.Body.Close()
+	log.Error(string(n))
+
+	w.Write([]byte(msg))
 	return
 }
 

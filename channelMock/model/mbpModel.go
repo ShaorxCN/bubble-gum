@@ -46,31 +46,31 @@ type MybankReqHead struct {
 
 // 全部放进去，随意处理
 type MybankBody struct {
-	XMLName              xml.Name    `xml:"body"`
-	AuthCode             string      `xml:"AuthCode,omitempty" validate:"nonzero" bson:"authCode"`                // 第三方支付授权码
-	OutTradeNo           string      `xml:"OutTradeNo,omitempty" validate:"nonzero" bson:"outTradeNo"`            // 外部交易号
-	Body                 string      `xml:"Body,omitempty" validate:"nonzero" bson:"body"`                        // 商品描述
-	GoodsTag             string      `xml:"GoodsTag,omitempty" bson:"goodsTag,omitempty"`                         // 商品标记。微信支付代金券或立减优惠功能的参数。
-	GoodsDetail          interface{} `xml:"GoodsDetail,omitempty" bson:"goodsDetail,omitempty"`                   // 商品明细列表信息,json格式
-	TotalAmount          int64       `xml:"TotalAmount,omitempty" validate:"nonzero" bson:"totalAmount"`          // 交易总额度。货币最小单位，人民币：分
-	Currency             string      `xml:"Currency,omitempty" validate:"nonzero" bson:"currency"`                // 币种。默认CNY
-	MerchantID           string      `xml:"MerchantId,omitempty" validate:"nonzero" bson:"merchantId"`            // 商户号。网商为商户分配的商户号，通过商户入驻结果查询接口获取
-	IsvOrgID             string      `xml:"IsvOrgId,omitempty" validate:"nonzero" bson:"isvOrgId"`                // 合作方机构号（网商银行分配）
-	ChannelType          string      `xml:"ChannelType,omitempty" validate:"nonzero" bson:"channelType"`          // 支付渠道类型。该笔支付走的第三方支付渠道：ALI/WX/QQ/JD
-	OperatorID           string      `xml:"OperatorId,omitempty" bson:"operatorId,omitempty"`                     // 操作员ID。门店操作员ID
-	StoreID              string      `xml:"StoreId,omitempty" bson:"storeId,omitempty"`                           // 门店ID
-	DeviceID             string      `xml:"DeviceId,omitempty" bson:"deviceId,omitempty"`                         // 终端设备号。门店收银设备ID
-	DeviceCreateIP       string      `xml:"DeviceCreateIp,omitempty" validate:"nonzero" bson:"deviceCreateIp"`    // 终端IP。订单生成的机器IP。
-	ExpireExpress        string      `xml:"ExpireExpress,omitempty" bson:"expireExpress,omitempty"`               // 订单有效期。指定订单的支付有效时间（以分钟计算），超过有效时间用户将无法支付。若不指定该参数则系统默认设置1小时支付有效时间。参数允许设置范围：1-1440区间的整数值。
-	SettleType           string      `xml:"SettleType,omitempty" validate:"nonzero" bson:"settleType"`            // 清算方式。可选值：T0：T+0清算按笔清算，目前仅支持清算到余利宝，不支持清算到银行卡。T1：T+1汇总清算，可支持清算到余利宝及清算到银行卡。
-	Attach               string      `xml:"Attach,omitempty" bson:"attach,omitempty"`                             // 附加信息，原样返回
-	PayLimit             string      `xml:"PayLimit,omitempty" bson:"payLimit,omitempty"`                         // 禁用支付方式。商户禁受理支付方式列表，多个用逗号隔开。可选值：credit：信用卡 pcredit：花呗（仅支付宝）
-	DiscountableAmount   int64       `xml:"DiscountableAmount,omitempty" bson:"discountableAmount,omitempty"`     // 可打折金额。货币最小单位，人民币：分。仅支付宝交易有效。如果同时传入了【可打折金额】，【不可打折金额】，【订单总金额】三者，则必须满足如下条件：【交易总额度】=【可打折金额】+【不可打折金额】
-	UndiscountableAmount int64       `xml:"UndiscountableAmount,omitempty" bson:"undiscountableAmount,omitempty"` // 不可打折金额。货币最小单位，人民币：分。仅支付宝交易有效。如果同时传入了【可打折金额】，【不可打折金额】，【订单总金额】三者，则必须满足如下条件：【交易总额度】=【可打折金额】+【不可打折金额】
-	AlipayStoreID        string      `xml:"AlipayStoreId,omitempty" bson:"alipayStoreId,omitempty"`               // 支付宝的店铺编号，用于精准店铺营销
-	SysServiceProviderID string      `xml:"SysServiceProviderId,omitempty" bson:"sysServiceProviderId,omitempty"` // 支付宝支持系统商返佣，该参数作为系统商返佣数据提取的依据，请填写系统商签约协议的PID
-	CheckLaterNm         int         `xml:"CheckLaterNm,omitempty" bson:"checkLaterNm,omitempty"`                 // 花呗交易分期数，可选值：3：3期 6：6期 12：12期 每期间隔为一个月。例如，选择3期，所垫付的资金及利息按3个月等额本息还款，每月还款一笔
-	GoodsID              string      `xml:"Goodsid,omitempty" validate:"nonzero"`                                 // 商品ID
+	XMLName        xml.Name    `xml:"body"`
+	AuthCode       string      `xml:"AuthCode,omitempty" validate:"nonzero" bson:"authCode"`             // 第三方支付授权码
+	OutTradeNo     string      `xml:"OutTradeNo,omitempty" validate:"nonzero" bson:"outTradeNo"`         // 外部交易号
+	Body           string      `xml:"Body,omitempty" validate:"nonzero" bson:"body"`                     // 商品描述
+	GoodsTag       string      `xml:"GoodsTag,omitempty" bson:"goodsTag,omitempty"`                      // 商品标记。微信支付代金券或立减优惠功能的参数。
+	GoodsDetail    interface{} `xml:"GoodsDetail,omitempty" bson:"goodsDetail,omitempty"`                // 商品明细列表信息,json格式
+	TotalAmount    int64       `xml:"TotalAmount,omitempty" validate:"nonzero" bson:"totalAmount"`       // 交易总额度。货币最小单位，人民币：分
+	Currency       string      `xml:"Currency,omitempty" validate:"nonzero" bson:"currency"`             // 币种。默认CNY
+	MerchantID     string      `xml:"MerchantId,omitempty" validate:"nonzero" bson:"merchantId"`         // 商户号。网商为商户分配的商户号，通过商户入驻结果查询接口获取
+	IsvOrgID       string      `xml:"IsvOrgId,omitempty" validate:"nonzero" bson:"isvOrgId"`             // 合作方机构号（网商银行分配）
+	ChannelType    string      `xml:"ChannelType,omitempty" validate:"nonzero" bson:"channelType"`       // 支付渠道类型。该笔支付走的第三方支付渠道：ALI/WX/QQ/JD
+	OperatorID     string      `xml:"OperatorId,omitempty" bson:"operatorId,omitempty"`                  // 操作员ID。门店操作员ID
+	StoreID        string      `xml:"StoreId,omitempty" bson:"storeId,omitempty"`                        // 门店ID
+	DeviceID       string      `xml:"DeviceId,omitempty" bson:"deviceId,omitempty"`                      // 终端设备号。门店收银设备ID
+	DeviceCreateIP string      `xml:"DeviceCreateIp,omitempty" validate:"nonzero" bson:"deviceCreateIp"` // 终端IP。订单生成的机器IP。
+	ExpireExpress  string      `xml:"ExpireExpress,omitempty" bson:"expireExpress,omitempty"`            // 订单有效期。指定订单的支付有效时间（以分钟计算），超过有效时间用户将无法支付。若不指定该参数则系统默认设置1小时支付有效时间。参数允许设置范围：1-1440区间的整数值。
+	SettleType     string      `xml:"SettleType,omitempty" validate:"nonzero" bson:"settleType"`         // 清算方式。可选值：T0：T+0清算按笔清算，目前仅支持清算到余利宝，不支持清算到银行卡。T1：T+1汇总清算，可支持清算到余利宝及清算到银行卡。
+	Attach         string      `xml:"Attach,omitempty" bson:"attach,omitempty"`                          // 附加信息，原样返回
+	PayLimit       string      `xml:"PayLimit,omitempty" bson:"payLimit,omitempty"`                      // 禁用支付方式。商户禁受理支付方式列表，多个用逗号隔开。可选值：credit：信用卡 pcredit：花呗（仅支付宝）
+	//DiscountableAmount   int64       `xml:"DiscountableAmount,omitempty" bson:"discountableAmount,omitempty"`     // 可打折金额。货币最小单位，人民币：分。仅支付宝交易有效。如果同时传入了【可打折金额】，【不可打折金额】，【订单总金额】三者，则必须满足如下条件：【交易总额度】=【可打折金额】+【不可打折金额】
+	//UndiscountableAmount int64       `xml:"UndiscountableAmount,omitempty" bson:"undiscountableAmount,omitempty"` // 不可打折金额。货币最小单位，人民币：分。仅支付宝交易有效。如果同时传入了【可打折金额】，【不可打折金额】，【订单总金额】三者，则必须满足如下条件：【交易总额度】=【可打折金额】+【不可打折金额】
+	AlipayStoreID        string `xml:"AlipayStoreId,omitempty" bson:"alipayStoreId,omitempty"`               // 支付宝的店铺编号，用于精准店铺营销
+	SysServiceProviderID string `xml:"SysServiceProviderId,omitempty" bson:"sysServiceProviderId,omitempty"` // 支付宝支持系统商返佣，该参数作为系统商返佣数据提取的依据，请填写系统商签约协议的PID
+	//CheckLaterNm         int         `xml:"CheckLaterNm,omitempty" bson:"checkLaterNm,omitempty"`                 // 花呗交易分期数，可选值：3：3期 6：6期 12：12期 每期间隔为一个月。例如，选择3期，所垫付的资金及利息按3个月等额本息还款，每月还款一笔
+	GoodsID string `xml:"Goodsid,omitempty" validate:"nonzero"` // 商品ID
 	//MerchantId           string      `xml:"MerchantId,omitempty" json:"-" `
 	//IsvOrgId          string `xml:"IsvOrgId,omitempty" json:"-" `
 	GmtPayment        string `xml:"GmtPayment,omitempty" json:"-" `

@@ -56,6 +56,7 @@ func fypQueryService(req *model.FyQueryReq) []byte {
 		TransactionID:     fmt.Sprintf("%d", time.Now().Unix()),
 		MchntOrderNo:      req.MchntOrderNo,
 		ReservedCouponFee: "1",
+		TransStat:         "SUCCESS",
 	}
 	bytes, _ := xml.Marshal(fyQueryResp)
 	return bytes
